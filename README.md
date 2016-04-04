@@ -17,6 +17,12 @@ In your html file, use the component like this:
 ```html
 <ng-tag-cloud cloud-width="250" cloud-height="250" cloud-data="data"></ng-tag-cloud> <!-- default height and width is 300px -->
 ```
+or with your custom defined `css`. Please check [code example](https://github.com/zeeshanhyder/angular-tag-cloud/tree/master/examples) to see how to implement custom `css`.
+
+```html
+<ng-tag-cloud class="custom-css-class" cloud-width="250" cloud-height="250" cloud-data="data"></ng-tag-cloud>
+```
+
 where your data is of `JSON` format as shown below. In your controller:
 
 ```javascript
