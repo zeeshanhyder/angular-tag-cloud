@@ -18,7 +18,7 @@ $ bower install angular-tag-cloud
 Then add a `<script>` in your project `html`:
 
 ```javascript
-<script src='/bower_components/angular-tag-cloud/src/ng-tag-cloud.js'
+<script src='/bower_components/angular-tag-cloud/src/ng-tag-cloud.js'></script>
 ```
 And finally in your Angular app, add the dependency as:
 
