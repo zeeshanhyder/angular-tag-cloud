@@ -1,0 +1,30 @@
+{
+  "name": "angular-tag-cloud",
+  "version": "0.1.0",
+  "description": "Create colorful cloud tags in angular with this library. No dependencies.",
+  "main": "dist/ng-tag-cloud-module.js",
+  "directories": {
+    "example": "examples",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zeeshanhyder/angular-tag-cloud.git"
+  },
+  "keywords": [
+    "angular",
+    "cloud-tags",
+    "tag-cloud",
+    "angular-tag-cloud",
+    "tags"
+  ],
+  "author": "Zeeshan Hyder <hyder.zeeshan@live.com> (https://github.com/zeeshanhyder)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zeeshanhyder/angular-tag-cloud/issues"
+  },
+  "homepage": "https://github.com/zeeshanhyder/angular-tag-cloud#readme"
+}
