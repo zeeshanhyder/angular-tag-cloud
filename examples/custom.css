@@ -1,0 +1,116 @@
+html{
+    height: 100%;
+    width:100%;
+}
+body{
+    font-family: "Helvetica","Helvetica-Neue",Arial,sans-serif;
+    font-size: 100%;
+    color: rgba(0,0,0,0.65);
+    margin:0;
+    padding: 0;
+    height: inherit;
+    
+
+}
+
+#wrapper{
+    width:90%;
+    margin:0 auto;
+    padding: 20px 0;
+    margin-bottom: 50px;
+}
+.header,.footer{
+    padding:1% 5%;
+    background: teal;
+    color: azure;
+}
+
+.header h3,h4,h5,h6,.footer h3,h4,h5,h6{
+    margin:0;
+}
+.footer{
+    position: fixed;
+    bottom:0;
+    width: 90%;
+}
+
+code{
+    background: #f5f5f5;
+    padding: 5px;
+    border-radius: 3px;
+    border:solid thin #d0d0d0;
+}
+.cloud-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: space-between;
+}
+
+.code-container{
+    display: flex;
+    flex-direction: column;
+    
+}
+.code-container h4{
+    margin:20px 0 0;
+}
+
+@media screen and (max-width: 799px){
+    .cloud-container{
+        flex-direction: column-reverse;
+    }
+}
+
+/********************** Custom CSS for tag-cloud ***************/
+
+/* fonts */
+
+div.custom-1  {
+  font-family: "Helvetica", "Arial", sans-serif;
+  font-size: 10px;
+  line-height: normal;
+}
+
+div.custom-1 a {
+  font-size: inherit;
+  text-decoration: none;
+}
+
+div.custom-1 span.w10 { font-size: 550%; }
+div.custom-1 span.w9 { font-size: 500%; }
+div.custom-1 span.w8 { font-size: 450%; }
+div.custom-1 span.w7 { font-size: 400%; }
+div.custom-1 span.w6 { font-size: 350%; }
+div.custom-1 span.w5 { font-size: 300%; }
+div.custom-1 span.w4 { font-size: 250%; }
+div.custom-1 span.w3 { font-size: 200%; }
+div.custom-1 span.w2 { font-size: 150%; }
+div.custom-1 span.w1 { font-size: 100%; }
+
+/* colors */
+
+div.custom-1 { color: #09f; }
+div.custom-1 a { color: inherit; }
+div.custom-1 a:hover { color: #0df; }
+div.custom-1 a:hover { color: #0cf; }
+div.custom-1 span.w10 { color: grey; }
+div.custom-1 span.w9 { color: #0cf; }
+div.custom-1 span.w8 { color: #0cf; }
+div.custom-1 span.w7 { color: #39d; }
+div.custom-1 span.w6 { color: #90c5f0; }
+div.custom-1 span.w5 { color: #90a0dd; }
+div.custom-1 span.w4 { color: purple; }
+div.custom-1 span.w3 { color: green; }
+div.custom-1 span.w2 { color: blue; }
+div.custom-1 span.w1 { color: red; }
+
+/* layout */
+
+div.ng-tag-cloud {
+  overflow: hidden;
+  position: relative;
+}
+
+div.ng-tag-cloud span { padding: 0; }
+

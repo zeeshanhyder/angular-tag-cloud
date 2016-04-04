@@ -1,0 +1,122 @@
+    <!DOCTYPE html>
+    <html ng-app="tagcloudExample">
+
+        <head>
+            
+            <meta name="viewport" content="width=device-width,initial-scale=1">
+            <link rel="stylesheet" href="../src/css/ng-tag-cloud.css"> <!-- tag-cloud default css -->
+            <link rel="stylesheet" href="custom.css"> <!-- Our custom CSS -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular.min.js"></script>
+            <title>Angular Tag Cloud v0.1 code example</title>
+        </head>
+
+        <body ng-controller="MyController">
+
+            <div class="header">
+                <h3>Angular Tag Cloud <small><b>(v0.1)</b></small></h3>
+            </div>
+            <div id="wrapper">
+                
+                <h4>tag-cloud with default CSS:</h4>
+                
+                <div class="cloud-container">
+                    <!-- tag-cloud with default css -->
+                    <ng-tag-cloud cloud-width="250" cloud-height="250" cloud-data="data"></ng-tag-cloud>
+                        
+                        <code>
+                            &lt;ng-tag-cloud cloud-width="250" cloud-height="250" cloud-data="data"&gt;&lt;/ng-tag-cloud&gt; //default width and height are 300px;
+                        </code>
+                        
+                </div>
+            
+                <h4>tag-cloud with custom CSS:</h4>
+                <div class="cloud-container">
+                    <!-- tag-cloud with default css -->
+                    <ng-tag-cloud class="custom-1" cloud-width="250" cloud-height="250" cloud-data="data"></ng-tag-cloud>
+                    <code>
+                        &lt;ng-tag-cloud class="custom-1" cloud-data="data"&gt;&lt;/ng-tag-cloud&gt;
+                    </code>
+                </div>
+                
+                <div class="code-container">
+                    <h4>JSON Data Format:</h4>
+                    <code style="max-width:400px">
+
+                        data = [
+                              {text: "Lorem", weight: 15},<br/>
+                              {text: "Ipsum", weight: 9},<br/>
+                              {text: "Dolor", weight: 6},<br/>
+                              {text: "Sit", weight: 7},<br/>
+                              {text: "Amet", weight: 5}<br/>
+                          ];
+
+                    </code>
+                </div>
+                
+                
+                <div class="code-container">
+                    <h4>Custom CSS:</h4>
+                    <code style="max-width:400px">
+
+                        div.custom-1  {<br/>
+                          font-family: "Helvetica", "Arial", sans-serif;<br/>
+                          font-size: 10px;<br/>
+                          line-height: normal;<br/>
+                        }<br/>
+<br/>
+                        div.custom-1 a {<br/>
+                          font-size: inherit;<br/>
+                          text-decoration: none;<br/>
+                        }<br/>
+<br/>
+                        div.custom-1 span.w10 { font-size: 550%; }<br/>
+                        div.custom-1 span.w9 { font-size: 500%; }<br/>
+                        div.custom-1 span.w8 { font-size: 450%; }<br/>
+                        div.custom-1 span.w7 { font-size: 400%; }<br/>
+                        div.custom-1 span.w6 { font-size: 350%; }<br/>
+                        div.custom-1 span.w5 { font-size: 300%; }<br/>
+                        div.custom-1 span.w4 { font-size: 250%; }<br/>
+                        div.custom-1 span.w3 { font-size: 200%; }<br/>
+                        div.custom-1 span.w2 { font-size: 150%; }<br/>
+                        div.custom-1 span.w1 { font-size: 100%; }<br/>
+<br/>
+                        /* colors */<br/>
+<br/>
+                        div.custom-1 { color: #09f; }<br/>
+                        div.custom-1 a { color: inherit; }<br/>
+                        div.custom-1 a:hover { color: #0df; }<br/>
+                        div.custom-1 a:hover { color: #0cf; }<br/>
+                        div.custom-1 span.w10 { color: grey; }<br/>
+                        div.custom-1 span.w9 { color: #0cf; }<br/>
+                        div.custom-1 span.w8 { color: #0cf; }<br/>
+                        div.custom-1 span.w7 { color: #39d; }<br/>
+                        div.custom-1 span.w6 { color: #90c5f0; }<br/>
+                        div.custom-1 span.w5 { color: #90a0dd; }<br/>
+                        div.custom-1 span.w4 { color: purple; }<br/>
+                        div.custom-1 span.w3 { color: green; }<br/>
+                        div.custom-1 span.w2 { color: blue; }<br/>
+                        div.custom-1 span.w1 { color: red; }<br/>
+<br/>
+                        /* layout */<br/>
+<br/>
+                        div.ng-tag-cloud {<br/>
+                          overflow: hidden;<br/>
+                          position: relative;<br/>
+                        }<br/>
+<br/>
+                        div.ng-tag-cloud span { padding: 0; }<br/>
+<br/>
+                    </code>
+                </div>
+                    
+            </div>
+            
+            <div class="footer">
+                <h4>Ported from <a href="https://github.com/lucaong/jQCloud">Lucaong's jQCloud</a></h4>
+            </div>
+            
+            <script src="../src/ng-tag-cloud.js"></script> <!-- Import tag-cloud module first -->
+            <script src="js/app.js"></script> <!-- Your app -->
+        </body>
+
+    </html>
