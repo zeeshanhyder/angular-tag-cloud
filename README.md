@@ -1,5 +1,5 @@
 # angular-tag-cloud
-Create simple and clean tag clouds in angular with this library. This library is based on [Lucaong's jQCloud](https://github.com/lucaong/jQCloud) which is jQuery tag cloud library.
+Create simple and clean tag clouds in angular with this library. This library is angular port of [Lucaong's jQCloud](https://github.com/lucaong/jQCloud) library.
 
 ## Installation
 
