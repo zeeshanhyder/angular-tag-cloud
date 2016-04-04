@@ -1,7 +1,7 @@
 {
   "name": "angular-tag-cloud",
   "version": "0.1.0",
-  "description": "Create colorful cloud tags in angular with this library. No dependencies.",
+  "description": "Create simple clean tag clouds in your Angular app. No other dependencies required.",
   "main": "dist/ng-tag-cloud-module.js",
   "directories": {
     "example": "examples",

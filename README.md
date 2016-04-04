@@ -1,15 +1,30 @@
 # angular-tag-cloud
-Create colorful cloud tags in angular with this library. No dependencies. This library is based on [Lucaong's jQCloud](https://github.com/lucaong/jQCloud) which is jQuery based tag cloud library.
+Create simple and clean tag clouds in angular with this library. This library is based on [Lucaong's jQCloud](https://github.com/lucaong/jQCloud) which is jQuery tag cloud library.
 
 ## Installation
 
+### General
 - Copy/move `ng-tag-cloud.js` from src dir in the package to your project dir
 - In your Angular app, add a dependency to your module as below:
   
-  `angular.module('yourApp',['ngTagCloud',...]');`
+  `angular.module('yourApp',['ngTagCloud',...]');` 
   
-> **`NPM`** Support coming soon!
-  
+### bower
+In your project dir, type the following command:
+
+```sh
+$ bower install angular-tag-cloud
+```
+Then add a `<script>` in your project `html`:
+
+```javascript
+<script src='/bower_components/angular-tag-cloud/src/ng-tag-cloud.js'
+```
+And finally in your Angular app, add the dependency as:
+
+`angular.module('yourApp',['ngTagCloud',...]');`
+
+ 
 ## Usage
 
 In your html file, use the component like this:

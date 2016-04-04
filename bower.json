@@ -5,7 +5,7 @@
   "authors": [
     "Zeeshan <hyder.zeeshan@live.com>"
   ],
-  "description": "Create colorful cloud tags in angular with this library. No dependencies.",
+  "description": "Create simple clean tag clouds in your Angular app. No other dependencies required.",
   "main": "src/ng-tag-cloud.js",
   "moduleType": [
     "amd",
