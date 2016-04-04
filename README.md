@@ -6,7 +6,7 @@ Create colorful cloud tags in angular with this library. No dependencies. This l
 - Copy/move `ng-tag-cloud.js` from src dir in the package to your project dir
 - In your Angular app, add a dependency to your module as below:
   
-  `angular.module('yourApp',[ngTagCloud]');`
+  `angular.module('yourApp',['ngTagCloud',...]');`
   
 > **`NPM`** Support coming soon!
   
