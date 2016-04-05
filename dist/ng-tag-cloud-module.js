@@ -1,6 +1,6 @@
 (function(){
     'use strict';
     
-    require('../src/ng-tag-cloud.js');
+    require('../src/ng-tag-cloud');
     module.exports = 'ngTagCloud';
 })();

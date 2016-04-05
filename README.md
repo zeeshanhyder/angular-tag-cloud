@@ -24,6 +24,18 @@ And finally in your Angular app, add the dependency as:
 
 `angular.module('yourApp',['ngTagCloud',...]');`
 
+
+### npm
+In your project dir, run the following command:
+
+```sh
+$ npm install angular-tag-cloud
+```
+Then `require()` in your project source as:
+
+```javascript
+require('angular-tag-cloud')
+```
  
 ## Usage
 
@@ -50,6 +62,15 @@ $scope.data = [
           // ...as many words as you want
       ];
 ```
+
+### Styling
+
+I have included a default `css` file for default styling. Include it in your file:
+
+```html
+<link rel="stylesheet" href="/src/css/ng-tag-cloud.css">
+```
+You can easily override it with your custom `css` class.
 
 ## Examples
 

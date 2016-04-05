@@ -22,6 +22,7 @@ ngTagCloud.directive("ngTagCloud",["$timeout","$log",function($timeout,$log){
            
            cloudWidth: '=?',
            cloudHeight: '=?',
+           cloudOverflow: '=?',
            cloudData: '='
        },
        template: "<div id='ng-tag-cloud' class='ng-tag-cloud'></div>",
@@ -58,7 +59,7 @@ ngTagCloud.directive("ngTagCloud",["$timeout","$log",function($timeout,$log){
               delayedMode: word_array.length > 50,
               shape: false, // It defaults to elliptic shape
               encodeURI: true,
-              removeOverflowing: true
+              removeOverflowing: $scope.cloudOverflow?false:true //TRUE by default. I know this is confusing, will be changed in next versions. 
             };
             options = angular.extend(default_options, options || {});
            
