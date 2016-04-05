@@ -1,6 +1,6 @@
 # angular-tag-cloud changelog
 
-## v0.1.5
+## v0.2.0
 - Added `overflow` option.
 - Changed license to MIT
 - npm installation guide
