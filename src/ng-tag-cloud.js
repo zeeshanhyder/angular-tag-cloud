@@ -33,35 +33,47 @@ ngTagCloud.directive("ngTagCloud",["$timeout","$log",function($timeout,$log){
            if($scope.cloudData === "" || $scope.cloudData === undefined){
                $log.error("ng-tag-cloud: No data passed. Please pass tags data as json. <ng-tag-cloud cloud-data='tagsJSON'></ng-tag-cloud\nFor more info see here: https://github.com/zeeshanhyder/angular-tag-cloud");
                return;
-           } 
+           }
+           $scope.$watchCollection('[cloudData]', function () {
+               $timeout(function(){
+                   buildOptions();
+                   drawWordCloud();
+               }, 10);
+           });
+
            //default options
            var options = {
                width: $scope.cloudWidth?$scope.cloudWidth:"300",
                height: $scope.cloudHeight?$scope.cloudHeight:"300"
-           },
-           word_array = $scope.cloudData;
+           };
            // Reference to the container element
            var $this = angular.element(element)[0];
-            // Namespace word ids to avoid collisions between multiple clouds
-            var cloud_namespace = $this.getAttribute('id') || Math.floor((Math.random()*1000000)).toString(36);   
-           
-           
-           $this.style.width = options.width+"px";
-           $this.style.height = options.height+"px";
-           // Default options value
-            var default_options = {
-              width: $this.offsetWidth,
-              height: $this.offsetHeight,
-              center: {
-                x: (options.width / 2.0),
-                y: (options.height / 2.0)
-              },
-              delayedMode: word_array.length > 50,
-              shape: false, // It defaults to elliptic shape
-              encodeURI: true,
-              removeOverflowing: $scope.cloudOverflow?false:true //TRUE by default. I know this is confusing, will be changed in next versions. 
-            };
-            options = angular.extend(default_options, options || {});
+           // Namespace word ids to avoid collisions between multiple clouds
+           var cloud_namespace = $this.getAttribute('id') || Math.floor((Math.random()*1000000)).toString(36);
+
+           var word_array = [];
+           var buildOptions = function () {
+               word_array = $scope.cloudData;
+
+               $this.style.width = options.width+"px";
+               $this.style.height = options.height+"px";
+               // Default options value
+               var default_options = {
+                   width: $this.offsetWidth,
+                   height: $this.offsetHeight,
+                   center: {
+                       x: (options.width / 2.0),
+                       y: (options.height / 2.0)
+                   },
+                   delayedMode: word_array.length > 50,
+                   shape: false, // It defaults to elliptic shape
+                   encodeURI: true,
+                   removeOverflowing: $scope.cloudOverflow?false:true //TRUE by default. I know this is confusing, will be changed in next versions.
+               };
+               options = angular.extend(default_options, options || {});
+           }
+
+           buildOptions();
            
             // Container's CSS position cannot be 'static'
             if ($this.style.position === "static" || $this.style.position === "") {
@@ -69,6 +81,7 @@ ngTagCloud.directive("ngTagCloud",["$timeout","$log",function($timeout,$log){
             }
 
             var drawWordCloud = function() {
+                element.empty();
               // Helper function to test if an element overlaps others
               var hitTest = function(elem, other_elems) {
                 // Pairwise overlap detection
