@@ -1,6 +1,6 @@
 {
   "name": "angular-tag-cloud",
-  "version": "0.2.0",
+  "version": "0.2.5",
   "description": "Create simple clean tag clouds in your Angular app. No other dependencies required.",
   "main": "dist/ng-tag-cloud-module.js",
   "directories": {
