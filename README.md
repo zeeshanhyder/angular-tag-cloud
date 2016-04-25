@@ -36,6 +36,15 @@ Then `require()` in your project source as:
 ```javascript
 require('angular-tag-cloud')
 ```
+
+### Styling
+
+I have included a default `css` file for default styling. Include it in your file:
+
+```html
+<link rel="stylesheet" href="[bower_components | node_modules]/angular-tag-cloud/src/css/ng-tag-cloud.css">
+```
+You can easily override it with your custom `css` class.
  
 ## Usage
 
@@ -54,7 +63,7 @@ where your data is of `JSON` format as shown below. In your controller:
 
 ```javascript
 $scope.data = [
-          {text: "Lorem", weight: 15},
+          {text: "Lorem", weight: 15, link: "https://google.com"}, //if your tag has a link.
           {text: "Ipsum", weight: 9},
           {text: "Dolor", weight: 6},
           {text: "Sit", weight: 7},
@@ -62,22 +71,8 @@ $scope.data = [
           // ...as many words as you want
       ];
 ```
-
-### Styling
-
-I have included a default `css` file for default styling. Include it in your file:
-
-```html
-<link rel="stylesheet" href="/src/css/ng-tag-cloud.css">
-```
-You can easily override it with your custom `css` class.
-
 ## Examples
 
 Please check the examples directory to get the exact idea of what i am talking about. It's always better to check examples. 
 
 Check code example [here](https://github.com/zeeshanhyder/angular-tag-cloud/tree/master/examples).
-
-## Note
-
-This is minimal version. Further versions will include custom `html` and `href` support. Thanks.

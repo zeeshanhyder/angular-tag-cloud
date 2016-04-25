@@ -1,5 +1,5 @@
 /**
- * Angular Tag Cloud v0.1 (https://github.com/angular-tag-cloud)
+ * Angular Tag Cloud (https://github.com/angular-tag-cloud)
  * Author: Zeeshan Hyder (https://github.com/zeeshanhyder)
  * Ported from: lucaong jQCloud (https://github.com/lucaong/jQCloud)
  *
@@ -7,8 +7,6 @@
  * Hello. This is the tag cloud library based in Angular and pure Javascript. It has no external dependencies. The library is ported from
  * lucaong's  jQCloud(github link above). His library is based in jQuery and is a core dependency, where as this library is independent and needs  * no external dependency. Please feel free to use this code and modify it according to your own wish.
  *
- * NOTE:
- * Certain features are disabled for now. I will try to implement them as soon as i get time. Or better yet if you can, please do. :)
  *
  * Thankyou.
  */
@@ -145,7 +143,29 @@ ngTagCloud.directive("ngTagCloud",["$timeout","$log",function($timeout,$log){
                 word_span = document.createElement("span");
                 word_span.className = 'w' + weight;
                 var textNode = document.createTextNode(word.text);
-                word_span.appendChild(textNode);
+                
+                // Append href if there's a link alongwith the tag
+                if (word.link !== undefined && word.link !== "") {
+                  // If link is a string, then use it as the link href
+                  if (typeof word.link === "string") {
+                    var href = word.link;
+                  }
+
+                  // Extend link html options with defaults
+                  if ( options.encodeURI ) {
+                    href = encodeURI(href).replace(/'/g, "%27");
+                  }
+
+                  var word_link = document.createElement("a");
+                  word_link.href = href;
+                  word_link.appendChild(textNode);
+                  word_span.appendChild(word_link);
+                } else {
+                    
+                    // If there's no link attribute
+                    word_span.appendChild(textNode);
+                }
+                  
 
                 // Bind handlers to words (though not really useful in this version!)
                 if (!!word.handlers) {
