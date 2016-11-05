@@ -8,6 +8,7 @@
     "test": "tests"
   },
   "scripts": {
+    "minify": "minify --output dist/ng-tag-cloud.min.js src/ng-tag-cloud.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -26,5 +27,8 @@
   "bugs": {
     "url": "https://github.com/zeeshanhyder/angular-tag-cloud/issues"
   },
-  "homepage": "https://github.com/zeeshanhyder/angular-tag-cloud#readme"
+  "homepage": "https://github.com/zeeshanhyder/angular-tag-cloud#readme",
+  "devDependencies": {
+    "minifier": "^0.8.0"
+  }
 }
