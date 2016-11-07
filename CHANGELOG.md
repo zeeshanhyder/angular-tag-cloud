@@ -1,5 +1,8 @@
 # angular-tag-cloud changelog
 
+## v0.3.1 (06/11/2016)
+- Added the minified version. By [Ashok](https://github.com/ashokyadav006).
+
 ## v0.3.0 (25/04/2016)
 - Added `href` support to tags. Use `link` property on tag object to specify link value.
 
