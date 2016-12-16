@@ -169,7 +169,7 @@ ngTagCloud.directive("ngTagCloud",["$timeout","$log",function($timeout,$log){
                 if (!!word.handlers) {
                   for (var prop in word.handlers) {
                     if (word.handlers.hasOwnProperty(prop) && typeof word.handlers[prop] === 'function') {
-                        word_span.addEventListener(prop,word.handlersp[prop]);
+                        word_span.addEventListener(prop,word.handlers[prop]);
                     }
                   }
                 }
