@@ -71,6 +71,15 @@ $scope.data = [
           // ...as many words as you want
       ];
 ```
+
+You can control whether there will be delay in word drawing like this:
+```html
+<ng-tag-cloud  cloud-width="250" cloud-height="250" delayed-mode="false"></ng-tag-cloud>
+```
+True - 10 ms delay.
+False - No delay.
+Undifened - True only if there is more then 50 words.
+
 ## Examples
 
 Please check the examples directory to get the exact idea of what i am talking about. It's always better to check examples. 
