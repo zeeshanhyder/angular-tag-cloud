@@ -1,5 +1,9 @@
 # angular-tag-cloud changelog
 
+## v0.3.2 (22/01/2017)
+- Expose the "delayed-mode" to user.
+- Removed redundant Second call for drawing the words. [yonatan20](https://github.com/yonatan20).
+
 ## v0.3.1 (06/11/2016)
 - Added the minified version. By [Ashok](https://github.com/ashokyadav006).
 

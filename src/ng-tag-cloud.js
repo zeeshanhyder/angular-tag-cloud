@@ -17,15 +17,16 @@ ngTagCloud.directive("ngTagCloud",["$timeout","$log",function($timeout,$log){
    return {
        restrict: 'EA',
        scope: {
-           
+
            cloudWidth: '=?',
            cloudHeight: '=?',
            cloudOverflow: '=?',
-           cloudData: '='
+           cloudData: '=',
+           delayedMode:'=?'
        },
        template: "<div id='ng-tag-cloud' class='ng-tag-cloud'></div>",
        link: function($scope,element,attrs){
-           
+
            if($scope.cloudData === "" || $scope.cloudData === undefined){
                $log.error("ng-tag-cloud: No data passed. Please pass tags data as json. <ng-tag-cloud cloud-data='tagsJSON'></ng-tag-cloud\nFor more info see here: https://github.com/zeeshanhyder/angular-tag-cloud");
                return;
@@ -40,7 +41,8 @@ ngTagCloud.directive("ngTagCloud",["$timeout","$log",function($timeout,$log){
            //default options
            var options = {
                width: $scope.cloudWidth?$scope.cloudWidth:"300",
-               height: $scope.cloudHeight?$scope.cloudHeight:"300"
+               height: $scope.cloudHeight?$scope.cloudHeight:"300",
+               delayedMode: ($scope.delayedMode!==undefined)?$scope.delayedMode:($scope.cloudData.length > 50)
            };
            // Reference to the container element
            var $this = angular.element(element)[0];
@@ -61,7 +63,7 @@ ngTagCloud.directive("ngTagCloud",["$timeout","$log",function($timeout,$log){
                        x: (options.width / 2.0),
                        y: (options.height / 2.0)
                    },
-                   delayedMode: word_array.length > 50,
+                   delayedMode: options.delayedMode,
                    shape: false, // It defaults to elliptic shape
                    encodeURI: true,
                    removeOverflowing: $scope.cloudOverflow?false:true //TRUE by default. I know this is confusing, will be changed in next versions.
@@ -70,7 +72,7 @@ ngTagCloud.directive("ngTagCloud",["$timeout","$log",function($timeout,$log){
            }
 
            buildOptions();
-           
+
             // Container's CSS position cannot be 'static'
             if ($this.style.position === "static" || $this.style.position === "") {
               $this.style.position === "relative";
@@ -129,7 +131,7 @@ ngTagCloud.directive("ngTagCloud",["$timeout","$log",function($timeout,$log){
                     word_span;
 
                 // Leave out custom html for now.
-            
+
                 // Check if min(weight) > max(weight) otherwise use default
                 if (word_array[0].weight > word_array[word_array.length - 1].weight) {
                   // Linearly map the original weight to a discrete scale from 1 to 10
@@ -141,7 +143,7 @@ ngTagCloud.directive("ngTagCloud",["$timeout","$log",function($timeout,$log){
                 word_span = document.createElement("span");
                 word_span.className = 'w' + weight;
                 var textNode = document.createTextNode(word.text);
-                
+
                 // Append href if there's a link alongwith the tag
                 if (word.link !== undefined && word.link !== "") {
                   // If link is a string, then use it as the link href
@@ -159,11 +161,11 @@ ngTagCloud.directive("ngTagCloud",["$timeout","$log",function($timeout,$log){
                   word_link.appendChild(textNode);
                   word_span.appendChild(word_link);
                 } else {
-                    
+
                     // If there's no link attribute
                     word_span.appendChild(textNode);
                 }
-                  
+
 
                 // Bind handlers to words (though not really useful in this version!)
                 if (!!word.handlers) {
@@ -231,7 +233,7 @@ ngTagCloud.directive("ngTagCloud",["$timeout","$log",function($timeout,$log){
 
                 // Invoke callback if existing
                 if (typeof(word.afterWordRender) === "function") {
-                  word.afterWordRender.call(word_span); 
+                  word.afterWordRender.call(word_span);
                 }
               };
 
@@ -265,11 +267,7 @@ ngTagCloud.directive("ngTagCloud",["$timeout","$log",function($timeout,$log){
                 }
               }
             };
-
-            // Delay execution so that the browser can render the page before the computatively intensive word cloud drawing
-            $timeout(function(){drawWordCloud();}, 10);
-           
        },
        replace: true
-   } 
+   }
 }]);
