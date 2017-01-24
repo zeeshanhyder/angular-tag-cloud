@@ -1,5 +1,10 @@
 # angular-tag-cloud changelog
 
+
+## v0.3.3 (24/01/2017)
+- Expose "afterCloudRender" function call to user (on-rendered attribute).
+- Fix - run afterCloudRender.call() only after cloud render .(instead on before and after) . [yonatan20](https://github.com/yonatan20).
+
 ## v0.3.2 (22/01/2017)
 - Expose the "delayed-mode" to user.
 - Removed redundant Second call for drawing the words. [yonatan20](https://github.com/yonatan20).

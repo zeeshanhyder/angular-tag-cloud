@@ -80,6 +80,11 @@ True - 10 ms delay.
 False - No delay.
 Undifened - True only if there is more then 50 words.
 
+You can pass function that will invoke after word cloud is rendered:
+```html
+<ng-tag-cloud  on-rendered="ctrl.myFunc()"></ng-tag-cloud>
+```
+
 ## Examples
 
 Please check the examples directory to get the exact idea of what i am talking about. It's always better to check examples. 
