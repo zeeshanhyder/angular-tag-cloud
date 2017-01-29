@@ -22,7 +22,8 @@ ngTagCloud.directive("ngTagCloud",["$timeout","$log",function($timeout,$log){
            cloudHeight: '=?',
            cloudOverflow: '=?',
            cloudData: '=',
-           delayedMode:'=?'
+           delayedMode:'=?',
+           onRendered: '&'
        },
        template: "<div id='ng-tag-cloud' class='ng-tag-cloud'></div>",
        link: function($scope,element,attrs){
@@ -44,6 +45,12 @@ ngTagCloud.directive("ngTagCloud",["$timeout","$log",function($timeout,$log){
                height: $scope.cloudHeight?$scope.cloudHeight:"300",
                delayedMode: ($scope.delayedMode!==undefined)?$scope.delayedMode:($scope.cloudData.length > 50)
            };
+
+           //Enable to execute function after cloud rendered
+           options.afterCloudRender = function() {
+               $scope.onRendered();
+           };
+
            // Reference to the container element
            var $this = angular.element(element)[0];
            // Namespace word ids to avoid collisions between multiple clouds
@@ -246,7 +253,7 @@ ngTagCloud.directive("ngTagCloud",["$timeout","$log",function($timeout,$log){
                 if (index < word_array.length) {
                   drawOneWord(index, word_array[index]);
                   $timeout(function(){drawOneWordDelayed(index + 1);}, 10);
-                } else {
+                } else if(index != 0){
                   if (typeof(options.afterCloudRender) === "function") {
                     options.afterCloudRender.call($this);
                   }
