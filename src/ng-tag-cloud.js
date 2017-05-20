@@ -23,13 +23,19 @@ ngTagCloud.directive("ngTagCloud",["$timeout","$log",function($timeout,$log){
            cloudOverflow: '=?',
            cloudData: '=',
            delayedMode:'=?',
-           onRendered: '&'
+           onRendered: '&',
+           cloudClick:'=',
+
        },
        template: "<div id='ng-tag-cloud' class='ng-tag-cloud'></div>",
        link: function($scope,element,attrs){
 
            if($scope.cloudData === "" || $scope.cloudData === undefined){
-               $log.error("ng-tag-cloud: No data passed. Please pass tags data as json. <ng-tag-cloud cloud-data='tagsJSON'></ng-tag-cloud\nFor more info see here: https://github.com/zeeshanhyder/angular-tag-cloud");
+               $log.debug("ng-tag-cloud: No data passed. Please pass tags data as json. <ng-tag-cloud cloud-data='tagsJSON'></ng-tag-cloud\nFor more info see here: https://github.com/zeeshanhyder/angular-tag-cloud");
+               return;
+           }
+           if($scope.cloudClick === "" || $scope.cloudClick === undefined){
+               $log.error("ng-tag-cloud: No click function passed. Please pass a function to handle click over words");
                return;
            }
            $scope.$watchCollection('[cloudData]', function () {
@@ -174,14 +180,18 @@ ngTagCloud.directive("ngTagCloud",["$timeout","$log",function($timeout,$log){
                 }
 
 
-                // Bind handlers to words (though not really useful in this version!)
-                if (!!word.handlers) {
-                  for (var prop in word.handlers) {
-                    if (word.handlers.hasOwnProperty(prop) && typeof word.handlers[prop] === 'function') {
-                        word_span.addEventListener(prop,word.handlers[prop]);
-                    }
-                  }
-                }
+                  // Bind handlers to words (though not really useful in this version!)
+                  //                if (!!word.handlers) {
+                  //                  for (var prop in word.handlers) {
+                  //                    if (word.handlers.hasOwnProperty(prop) && typeof word.handlers[prop] === 'function') {
+                  //                        word_span.addEventListener(prop,word.handlers[prop]);
+                  //                    }
+                  //                  }
+                  //                }$scope.cloudClick(word.text)
+                  var $ = angular.element;
+                  $(word_span).click({text:word.text},$scope.cloudClick);
+                  $(word_span).addClass('cloud-word');
+                  //                word_span.onclick($scope.cloudClick(word.text));
 
                 $this.appendChild(word_span);
 
