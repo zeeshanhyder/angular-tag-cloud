@@ -1,3 +1,4 @@
+"use strict"
 /**
  * Angular Tag Cloud (https://github.com/angular-tag-cloud)
  * Author: Zeeshan Hyder (https://github.com/zeeshanhyder)
@@ -11,9 +12,9 @@
  * Thankyou.
  */
 
-var ngTagCloud = angular.module("ngTagCloud", []);
+var ngTagCloud = angular.module("ngTagCloud",[]);
 
-ngTagCloud.directive("ngTagCloud", ["$timeout", "$log", function ($timeout, $log) {
+ngTagCloud.directive("ngTagCloud",["$timeout","$log",function($timeout,$log){
     return {
         restrict: 'EA',
         scope: {
@@ -22,47 +23,51 @@ ngTagCloud.directive("ngTagCloud", ["$timeout", "$log", function ($timeout, $log
             cloudHeight: '=?',
             cloudOverflow: '=?',
             cloudData: '=',
-            delayedMode: '=?',
+            cloudClick:'=',
+            delayedMode:'=?',
             onRendered: '&',
-            cloudColors: '=?'
         },
         template: "<div id='ng-tag-cloud' class='ng-tag-cloud'></div>",
-        link: function ($scope, element, attrs) {
+        link: function($scope,element,attrs){
 
-            if ($scope.cloudData === "" || $scope.cloudData === undefined) {
-                $log.error("ng-tag-cloud: No data passed. Please pass tags data as json. <ng-tag-cloud cloud-data='tagsJSON'></ng-tag-cloud\nFor more info see here: https://github.com/zeeshanhyder/angular-tag-cloud");
+            if($scope.cloudData === "" || $scope.cloudData === undefined){
+                $log.debug("ng-tag-cloud: No data passed. Please pass tags data as json. <ng-tag-cloud cloud-data='tagsJSON'></ng-tag-cloud\nFor more info see here: https://github.com/zeeshanhyder/angular-tag-cloud");
+                return;
+            }
+            if($scope.cloudClick === "" || $scope.cloudClick === undefined){
+                $log.error("ng-tag-cloud: No click function passed. Please pass a function to handle click over words");
                 return;
             }
             $scope.$watchCollection('[cloudData]', function () {
-                $timeout(function () {
+                $timeout(function(){
                     buildOptions();
                     drawWordCloud();
-                }, 10);
+                }, 50);
             });
 
             //default options
             var options = {
-                width: $scope.cloudWidth ? $scope.cloudWidth : "300",
-                height: $scope.cloudHeight ? $scope.cloudHeight : "300",
-                delayedMode: ($scope.delayedMode !== undefined) ? $scope.delayedMode : ($scope.cloudData.length > 50)
+                width: $scope.cloudWidth?$scope.cloudWidth:"300",
+                height: $scope.cloudHeight?$scope.cloudHeight:"300",
+                delayedMode: ($scope.delayedMode!==undefined)?$scope.delayedMode:($scope.cloudData.length > 50)
             };
 
             //Enable to execute function after cloud rendered
-            options.afterCloudRender = function () {
+            options.afterCloudRender = function() {
                 $scope.onRendered();
             };
 
             // Reference to the container element
             var $this = angular.element(element)[0];
             // Namespace word ids to avoid collisions between multiple clouds
-            var cloud_namespace = $this.getAttribute('id') || Math.floor((Math.random() * 1000000)).toString(36);
+            var cloud_namespace = $this.getAttribute('id') || Math.floor((Math.random()*1000000)).toString(36);
 
             var word_array = [];
             var buildOptions = function () {
                 word_array = $scope.cloudData;
 
-                $this.style.width = options.width + "px";
-                $this.style.height = options.height + "px";
+                $this.style.width = options.width+"px";
+                $this.style.height = options.height+"px";
                 // Default options value
                 var default_options = {
                     width: $this.offsetWidth,
@@ -74,26 +79,26 @@ ngTagCloud.directive("ngTagCloud", ["$timeout", "$log", function ($timeout, $log
                     delayedMode: options.delayedMode,
                     shape: false, // It defaults to elliptic shape
                     encodeURI: true,
-                    removeOverflowing: $scope.cloudOverflow ? false : true //TRUE by default. I know this is confusing, will be changed in next versions.
+                    removeOverflowing: $scope.cloudOverflow?false:true //TRUE by default. I know this is confusing, will be changed in next versions.
                 };
                 options = angular.extend(default_options, options || {});
-            }
+            };
 
             buildOptions();
 
             // Container's CSS position cannot be 'static'
             if ($this.style.position === "static" || $this.style.position === "") {
-                $this.style.position === "relative";
+                $this.style.position = "relative";
             }
 
-            var drawWordCloud = function () {
+            var drawWordCloud = function() {
                 element.empty();
                 // Helper function to test if an element overlaps others
-                var hitTest = function (elem, other_elems) {
+                var hitTest = function(elem, other_elems) {
                     // Pairwise overlap detection
-                    var overlapping = function (a, b) {
-                        if (Math.abs(2.0 * a.offsetLeft + a.offsetWidth - 2.0 * b.offsetLeft - b.offsetWidth) < a.offsetWidth + b.offsetWidth) {
-                            if (Math.abs(2.0 * a.offsetTop + a.offsetHeight - 2.0 * b.offsetTop - b.offsetHeight) < a.offsetHeight + b.offsetHeight) {
+                    var overlapping = function(a, b) {
+                        if (Math.abs(2.0*a.offsetLeft + a.offsetWidth - 2.0*b.offsetLeft - b.offsetWidth) < a.offsetWidth + b.offsetWidth) {
+                            if (Math.abs(2.0*a.offsetTop + a.offsetHeight - 2.0*b.offsetTop - b.offsetHeight) < a.offsetHeight + b.offsetHeight) {
                                 return true;
                             }
                         }
@@ -101,7 +106,7 @@ ngTagCloud.directive("ngTagCloud", ["$timeout", "$log", function ($timeout, $log
                     };
                     var i = 0;
                     // Check elements for overlap one by one, stop and return false as soon as an overlap is found
-                    for (i = 0; i < other_elems.length; i++) {
+                    for(i = 0; i < other_elems.length; i++) {
                         if (overlapping(elem, other_elems[i])) {
                             return true;
                         }
@@ -115,22 +120,14 @@ ngTagCloud.directive("ngTagCloud", ["$timeout", "$log", function ($timeout, $log
                 }
 
                 // Sort word_array from the word with the highest weight to the one with the lowest
-                word_array.sort(function (a, b) {
-                    if (a.weight < b.weight) {
-                        return 1;
-                    } else if (a.weight > b.weight) {
-                        return -1;
-                    } else {
-                        return 0;
-                    }
-                });
+                word_array.sort(function(a, b) { if (a.weight < b.weight) {return 1;} else if (a.weight > b.weight) {return -1;} else {return 0;} });
 
                 var step = (options.shape === "rectangular") ? 18.0 : 2.0,
                     already_placed_words = [],
                     aspect_ratio = options.width / options.height;
 
                 // Function to draw a word, by moving it in spiral until it finds a suitable empty place. This will be iterated on each word.
-                var drawOneWord = function (index, word) {
+                var drawOneWord = function(index, word) {
                     // Define the ID attribute of the span that will wrap the word, and the associated jQuery selector string
                     var word_id = cloud_namespace + "_word_" + index,
                         word_selector = "#" + word_id,
@@ -152,7 +149,7 @@ ngTagCloud.directive("ngTagCloud", ["$timeout", "$log", function ($timeout, $log
                     if (word_array[0].weight > word_array[word_array.length - 1].weight) {
                         // Linearly map the original weight to a discrete scale from 1 to 10
                         weight = Math.round((word.weight - word_array[word_array.length - 1].weight) /
-                            (word_array[0].weight - word_array[word_array.length - 1].weight) * 9.0) + 1;
+                                            (word_array[0].weight - word_array[word_array.length - 1].weight) * 9.0) + 1;
                     }
 
                     // Create a new span and insert node.
@@ -168,7 +165,7 @@ ngTagCloud.directive("ngTagCloud", ["$timeout", "$log", function ($timeout, $log
                         }
 
                         // Extend link html options with defaults
-                        if (options.encodeURI) {
+                        if ( options.encodeURI ) {
                             href = encodeURI(href).replace(/'/g, "%27");
                         }
 
@@ -182,6 +179,7 @@ ngTagCloud.directive("ngTagCloud", ["$timeout", "$log", function ($timeout, $log
                         word_span.appendChild(textNode);
                     }
 
+
                     // Bind handlers to words (though not really useful in this version!)
                     //                if (!!word.handlers) {
                     //                  for (var prop in word.handlers) {
@@ -191,9 +189,7 @@ ngTagCloud.directive("ngTagCloud", ["$timeout", "$log", function ($timeout, $log
                     //                  }
                     //                }$scope.cloudClick(word.text)
                     var $ = angular.element;
-                    $(word_span).click({
-                        text: word.text
-                    }, $scope.cloudClick);
+                    $(word_span).click({text:word.text},$scope.cloudClick);
                     $(word_span).addClass('cloud-word');
                     //                word_span.onclick($scope.cloudClick(word.text));
                     $this.appendChild(word_span);
@@ -208,8 +204,10 @@ ngTagCloud.directive("ngTagCloud", ["$timeout", "$log", function ($timeout, $log
                     word_style.position = "absolute";
                     word_style.left = left + "px";
                     word_style.top = top + "px";
+                    //                word_style.color="white";  
+                    //                word_style.cursor="pointer";
 
-                    while (hitTest(word_span, already_placed_words)) {
+                    while(hitTest(word_span, already_placed_words)) {
                         // option shape is 'rectangular' so move the word in a rectangular spiral
                         if (options.shape === "rectangular") { //not enabled in this version.
                             steps_in_direction++;
@@ -217,7 +215,7 @@ ngTagCloud.directive("ngTagCloud", ["$timeout", "$log", function ($timeout, $log
                                 steps_in_direction = 0.0;
                                 quarter_turns++;
                             }
-                            switch (quarter_turns % 4) {
+                            switch(quarter_turns % 4) {
                                 case 1:
                                     left += step * aspect_ratio + Math.random() * 2.0;
                                     break;
@@ -230,13 +228,13 @@ ngTagCloud.directive("ngTagCloud", ["$timeout", "$log", function ($timeout, $log
                                 case 0:
                                     top += step + Math.random() * 2.0;
                                     break;
-                            }
+                                                    }
                         } else { // Default settings: elliptic spiral shape
                             radius += step;
-                            angle += (index % 2 === 0 ? 1 : -1) * step;
+                            angle += (index % 2 === 0 ? 1 : -1)*step;
 
-                            left = options.center.x - (width / 2.0) + (radius * Math.cos(angle)) * aspect_ratio;
-                            top = options.center.y + radius * Math.sin(angle) - (height / 2.0);
+                            left = options.center.x - (width / 2.0) + (radius*Math.cos(angle)) * aspect_ratio;
+                            top = options.center.y + radius*Math.sin(angle) - (height / 2.0);
                         }
                         word_style.left = left + "px";
                         word_style.top = top + "px";
@@ -252,45 +250,42 @@ ngTagCloud.directive("ngTagCloud", ["$timeout", "$log", function ($timeout, $log
                     already_placed_words.push(word_span);
 
                     // Invoke callback if existing
-                    if (typeof (word.afterWordRender) === "function") {
+                    if (typeof(word.afterWordRender) === "function") {
                         word.afterWordRender.call(word_span);
                     }
                 };
 
-                var drawOneWordDelayed = function (index) {
+                var drawOneWordDelayed = function(index) {
                     index = index || 0;
-                    if ($this.offsetWidth <= 0 && $this.offsetHeight <= 0) { // if not visible then do not attempt to draw
-                        $timeout(function () {
-                            drawOneWordDelayed(index);
-                        }, 10);
+                    if ($this.offsetWidth<= 0 && $this.offsetHeight <= 0 ) { // if not visible then do not attempt to draw
+                        $timeout(function(){drawOneWordDelayed(index);},10);
                         return;
                     }
                     if (index < word_array.length) {
                         drawOneWord(index, word_array[index]);
-                        $timeout(function () {
-                            drawOneWordDelayed(index + 1);
-                        }, 10);
-                    } else if (index !== 0) {
-                        if (typeof (options.afterCloudRender) === "function") {
+                        $timeout(function(){drawOneWordDelayed(index + 1);}, 10);
+                    } else if(index != 0){
+                        if (typeof(options.afterCloudRender) === "function") {
                             options.afterCloudRender.call($this);
                         }
                     }
                 };
 
                 // Iterate drawOneWord on every word. The way the iteration is done depends on the drawing mode (delayedMode is true or false)
-                if (options.delayedMode) {
+                if (options.delayedMode){
                     drawOneWordDelayed();
-                } else {
+                }
+                else {
 
-                    word_array.forEach(function (elem, index) {
+                    word_array.forEach( function(elem,index){
                         drawOneWord(index, elem);
-                    });
-                    if (typeof (options.afterCloudRender) === "function") {
+                    } );
+                    if (typeof(options.afterCloudRender) === "function") {
                         options.afterCloudRender.call($this);
                     }
                 }
             };
         },
         replace: true
-    };
+    }
 }]);
