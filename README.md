@@ -59,6 +59,13 @@ or with your custom defined `css`. Please check [code example](https://github.co
 <ng-tag-cloud class="custom-css-class" cloud-width="250" cloud-height="250" cloud-data="data"></ng-tag-cloud>
 ```
 
+You can also pass the font-sizes to make sure that the words not overlapping:
+
+```html
+<ng-tag-cloud weights="[ '100%' , '120%' , '160%' , '180%' ]"></ng-tag-cloud> 
+``` 
+you can use 'px' or 'rem' as well.
+
 where your data is of `JSON` format as shown below. In your controller:
 
 ```javascript
@@ -76,14 +83,15 @@ You can control whether there will be delay in word drawing like this:
 ```html
 <ng-tag-cloud  cloud-width="250" cloud-height="250" delayed-mode="false"></ng-tag-cloud>
 ```
-True - 10 ms delay.
-False - No delay.
-Undifened - True only if there is more then 50 words.
+- True - 10 ms delay.
+- False - No delay.
+- Undefined - True only if there is more then 50 words.
 
 You can pass function that will invoke after word cloud is rendered:
 ```html
 <ng-tag-cloud  on-rendered="ctrl.myFunc()"></ng-tag-cloud>
 ```
+
 
 ## Examples
 
