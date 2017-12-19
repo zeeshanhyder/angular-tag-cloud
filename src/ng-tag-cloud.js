@@ -11,6 +11,7 @@
  *
  * Thankyou.
  */
+const WEIGHTS_LENGHT = 10;
 
 var ngTagCloud = angular.module("ngTagCloud",[]);
 
@@ -18,14 +19,14 @@ ngTagCloud.directive("ngTagCloud",["$timeout","$log",function($timeout,$log){
     return {
         restrict: 'EA',
         scope: {
-
             cloudWidth: '=?',
             cloudHeight: '=?',
             cloudOverflow: '=?',
             cloudData: '=',
             cloudClick:'=',
+            weights: '=',
             delayedMode:'=?',
-            onRendered: '&',
+            onRendered: '&'
         },
         template: "<div id='ng-tag-cloud' class='ng-tag-cloud'></div>",
         link: function($scope,element,attrs){
@@ -34,8 +35,8 @@ ngTagCloud.directive("ngTagCloud",["$timeout","$log",function($timeout,$log){
                 $log.debug("ng-tag-cloud: No data passed. Please pass tags data as json. <ng-tag-cloud cloud-data='tagsJSON'></ng-tag-cloud\nFor more info see here: https://github.com/zeeshanhyder/angular-tag-cloud");
                 return;
             }
-            if($scope.cloudClick === "" || $scope.cloudClick === undefined){
-                $log.error("ng-tag-cloud: No click function passed. Please pass a function to handle click over words");
+            if($scope.weights !== undefined && $scope.weights.length !== WEIGHTS_LENGHT){
+                $log.error("ng-tag-cloud: weights length should be exactly " + WEIGHTS_LENGHT);
                 return;
             }
             $scope.$watchCollection('[cloudData]', function () {
@@ -81,6 +82,9 @@ ngTagCloud.directive("ngTagCloud",["$timeout","$log",function($timeout,$log){
                     encodeURI: true,
                     removeOverflowing: $scope.cloudOverflow?false:true //TRUE by default. I know this is confusing, will be changed in next versions.
                 };
+                if ($scope.weights){
+                    options.weights = $scope.weights;
+                }
                 options = angular.extend(default_options, options || {});
             };
 
@@ -149,7 +153,7 @@ ngTagCloud.directive("ngTagCloud",["$timeout","$log",function($timeout,$log){
                     if (word_array[0].weight > word_array[word_array.length - 1].weight) {
                         // Linearly map the original weight to a discrete scale from 1 to 10
                         weight = Math.round((word.weight - word_array[word_array.length - 1].weight) /
-                                            (word_array[0].weight - word_array[word_array.length - 1].weight) * 9.0) + 1;
+                                            (word_array[0].weight - word_array[word_array.length - 1].weight) * (WEIGHTS_LENGHT - 1)) + 1;
                     }
 
                     // Create a new span and insert node.
@@ -189,10 +193,15 @@ ngTagCloud.directive("ngTagCloud",["$timeout","$log",function($timeout,$log){
                     //                  }
                     //                }$scope.cloudClick(word.text)
                     var $ = angular.element;
-                    $(word_span).click({text:word.text},$scope.cloudClick);
-                    $(word_span).addClass('cloud-word');
-                    //                word_span.onclick($scope.cloudClick(word.text));
+                    if($scope.cloudClick){
+                        $(word_span).click({text:word.text},$scope.cloudClick);
+                        $(word_span).addClass('cloud-word');
+                    }
                     $this.appendChild(word_span);
+
+                    if(options.weights) {
+                        word_span.style.fontSize = options.weights[weight -1];
+                    }
 
                     var width = word_span.offsetWidth,
                         height = word_span.offsetHeight,
@@ -204,8 +213,6 @@ ngTagCloud.directive("ngTagCloud",["$timeout","$log",function($timeout,$log){
                     word_style.position = "absolute";
                     word_style.left = left + "px";
                     word_style.top = top + "px";
-                    //                word_style.color="white";  
-                    //                word_style.cursor="pointer";
 
                     while(hitTest(word_span, already_placed_words)) {
                         // option shape is 'rectangular' so move the word in a rectangular spiral
@@ -264,7 +271,7 @@ ngTagCloud.directive("ngTagCloud",["$timeout","$log",function($timeout,$log){
                     if (index < word_array.length) {
                         drawOneWord(index, word_array[index]);
                         $timeout(function(){drawOneWordDelayed(index + 1);}, 10);
-                    } else if(index != 0){
+                    } else if(index !== 0){
                         if (typeof(options.afterCloudRender) === "function") {
                             options.afterCloudRender.call($this);
                         }
