@@ -1,6 +1,10 @@
 # angular-tag-cloud changelog
 
-
+## v0.3.4 (19/12/2017)
+ - Fix - not forcing to add click function
+ - Add the ability to pass the weights into the component.
+   (to make sure that words not overlapping because of custom css)   
+ 
 ## v0.3.3 (24/01/2017)
 - Expose "afterCloudRender" function call to user (on-rendered attribute).
 - Fix - run afterCloudRender.call() only after cloud render .(instead on before and after) . [yonatan20](https://github.com/yonatan20).
