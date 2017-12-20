@@ -11,7 +11,7 @@
  *
  * Thankyou.
  */
-const WEIGHTS_LENGHT = 10;
+const WEIGHTS_LENGTH = 10;
 
 var ngTagCloud = angular.module("ngTagCloud",[]);
 
@@ -35,8 +35,8 @@ ngTagCloud.directive("ngTagCloud",["$timeout","$log",function($timeout,$log){
                 $log.debug("ng-tag-cloud: No data passed. Please pass tags data as json. <ng-tag-cloud cloud-data='tagsJSON'></ng-tag-cloud\nFor more info see here: https://github.com/zeeshanhyder/angular-tag-cloud");
                 return;
             }
-            if($scope.weights !== undefined && $scope.weights.length !== WEIGHTS_LENGHT){
-                $log.error("ng-tag-cloud: weights length should be exactly " + WEIGHTS_LENGHT);
+            if($scope.weights !== undefined && $scope.weights.length !== WEIGHTS_LENGTH){
+                $log.error("ng-tag-cloud: weights length should be exactly " + WEIGHTS_LENGTH);
                 return;
             }
             $scope.$watchCollection('[cloudData]', function () {
@@ -153,7 +153,7 @@ ngTagCloud.directive("ngTagCloud",["$timeout","$log",function($timeout,$log){
                     if (word_array[0].weight > word_array[word_array.length - 1].weight) {
                         // Linearly map the original weight to a discrete scale from 1 to 10
                         weight = Math.round((word.weight - word_array[word_array.length - 1].weight) /
-                                            (word_array[0].weight - word_array[word_array.length - 1].weight) * (WEIGHTS_LENGHT - 1)) + 1;
+                                            (word_array[0].weight - word_array[word_array.length - 1].weight) * (WEIGHTS_LENGTH - 1)) + 1;
                     }
 
                     // Create a new span and insert node.
